@@ -48,7 +48,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('replacement', models.BooleanField(null=True)),
-                ('BeginTime', models.TextField()),
+                ('begin_time', models.TimeField(auto_now=False)),
                 ('class_room', models.IntegerField(validators=[django.core.validators.MinValueValidator(100), django.core.validators.MaxValueValidator(600)])),
                 ('day_of_week', models.CharField(choices=[('Mon', 'Monday'), ('Tue', 'Tuesday'), ('Wed', 'Wednsday'), ('Thu', 'Thursday'), ('Fri', 'Friday')], max_length=3)),
                 ('school_class', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='school_timetable.class')),

@@ -30,13 +30,15 @@ class Teacher(models.Model):
     school_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'{self.first_name} {self.patronymic} {self.last_name}'
 
 class Lesson(models.Model):
     school_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     replacement = models.BooleanField(null=True)
-    BeginTime = models.TextField()
+    begin_time = models.TimeField(auto_now=False)
     class_room = models.IntegerField(validators=[MinValueValidator(100), MaxValueValidator(600)])
 
     DAY_OF_WEEK = (

@@ -5,7 +5,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Subject(models.Model):
     name = models.CharField(max_length=30, unique=True, help_text='Введите название урока')
-    difficulty = models.IntegerField(help_text='Введите сложность урока от 1 до 10', validators=[MinValueValidator(1), MaxValueValidator(10)])
+    difficulty = models.IntegerField(help_text='Введите сложность урока от 1 до 12', validators=[MinValueValidator(1), MaxValueValidator(12)])
 
     def __str__(self):
         return f'{self.name}'
@@ -24,8 +24,12 @@ class Class(models.Model):
 
 
 class Teacher(models.Model):
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    patronymic = models.CharField(max_length=30)
     school_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+
 
 class Lesson(models.Model):
     school_class = models.ForeignKey(Class, on_delete=models.CASCADE)

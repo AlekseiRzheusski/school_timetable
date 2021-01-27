@@ -2,8 +2,9 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Subject, Lesson, Teacher
-from .serializers import SubjectListSerializer, SubjectDetailSerializer, LessonListSerializer, TeacherDetailSerializer, LessonCreateSerializer, ClassSerializer
+from .models import Subject, Lesson, Teacher, Class
+from .serializers import SubjectListSerializer, SubjectDetailSerializer, LessonListSerializer, TeacherDetailSerializer, LessonCreateSerializer
+from .serializers import LessonDetailSerializer, ClassSerializer
 # Create your views here.
 
 # Subject
@@ -29,6 +30,14 @@ class LessonListView(APIView):
     def get(self, request):
         lessons = Lesson.objects.all()
         serializer = LessonListSerializer(lessons, many=True)
+        return Response(serializer.data)
+
+
+class LessonDetailView(APIView):
+
+    def get(self, request, pk):
+        lesson = Lesson.objects.get(id=pk)
+        serializer = LessonDetailSerializer(lesson)
         return Response(serializer.data)
 
 

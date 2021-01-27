@@ -12,8 +12,8 @@ class Subject(models.Model):
 
 
 class Class(models.Model):
-    '''Model representing school class'''
-    grade = models.IntegerField(validators=[MaxValueValidator(1), MaxValueValidator(11)])
+    '''Model that represents school class'''
+    grade = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(11)])
     character = models.CharField(max_length=1)
 
     class Meta:

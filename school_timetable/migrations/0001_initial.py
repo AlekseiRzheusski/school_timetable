@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='Class',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('grade', models.IntegerField(validators=[django.core.validators.MaxValueValidator(1), django.core.validators.MaxValueValidator(11)])),
+                ('grade', models.IntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(11)])),
                 ('character', models.CharField(max_length=1)),
             ],
             options={

@@ -34,9 +34,9 @@ class Teacher(models.Model):
         return f'{self.first_name} {self.patronymic} {self.last_name}'
 
 class Lesson(models.Model):
-    school_class = models.ForeignKey(Class, on_delete=models.CASCADE)
+    school_class = models.ForeignKey(Class, on_delete=models.CASCADE, related_name='lesson')
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='lesson')
     replacement = models.BooleanField(null=True)
     begin_time = models.TimeField(auto_now=False)
     class_room = models.IntegerField(validators=[MinValueValidator(100), MaxValueValidator(600)])

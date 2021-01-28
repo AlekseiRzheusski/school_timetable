@@ -8,6 +8,14 @@ class ClassSerializer(serializers.ModelSerializer):
         model = Class
         fields = '__all__'
 
+    def create(self, validated_data):
+        return Class.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        for attribute, value in validated_data.items():
+            setattr(instance, attribute, value)
+        instance.save()
+        return instance
 
 class SubjectListSerializer(serializers.ModelSerializer):
 
@@ -23,11 +31,21 @@ class SubjectDetailSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class LessonCreateSerializer(serializers.ModelSerializer):
+class LessonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lesson
         fields = '__all__'
+
+
+    def create(self, validated_data):
+        return Lesson.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        for attribute, value in validated_data.items():
+            setattr(instance, attribute, value)
+        instance.save()
+        return instance
 
 
 class LessonListSerializer(serializers.ModelSerializer):

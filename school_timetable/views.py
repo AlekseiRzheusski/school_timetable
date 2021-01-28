@@ -1,10 +1,17 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import generics
 
 from .models import Subject, Lesson, Teacher, Class
-from .serializers import SubjectListSerializer, SubjectDetailSerializer, LessonListSerializer, TeacherDetailSerializer, LessonSerializer
-from .serializers import LessonDetailSerializer, ClassSerializer
+from .serializers import (SubjectListSerializer,
+                          SubjectDetailSerializer,
+                          LessonListSerializer,
+                          TeacherDetailSerializer,
+                          LessonSerializer,
+                          LessonDetailSerializer,
+                          ClassSerializer,
+                          TeacherSerializer)
 # Create your views here.
 
 # Subject
@@ -33,20 +40,16 @@ class LessonListView(APIView):
         return Response(serializer.data)
 
 
-class LessonDetailView(APIView):
+class LessonDetailView(generics.RetrieveAPIView):
 
-    def get(self, request, pk):
-        lesson = Lesson.objects.get(id=pk)
-        serializer = LessonDetailSerializer(lesson)
-        return Response(serializer.data)
+    queryset = Lesson.objects.all()
+    serializer_class=LessonDetailSerializer
 
 
-class LessonRawView(APIView):
+class LessonRawView(generics.ListAPIView):
     
-    def get(self, request):
-        lessons = Lesson.objects.all()
-        serializer = LessonSerializer(lessons, many=True)
-        return Response(serializer.data)
+    queryset = Lesson.objects.all()
+    serializer_class = LessonSerializer
 
 
 class LessonView(APIView):
@@ -76,6 +79,17 @@ class TeacherDetailView(APIView):
         teachers = Teacher.objects.get(id=pk)
         serializer = TeacherDetailSerializer(teachers)
         return Response(serializer.data)
+
+
+class TeacherCreateView(generics.CreateAPIView):
+
+    serializer_class = TeacherSerializer
+
+
+class TeacherListView(generics.ListAPIView):
+
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherDetailSerializer
 
 
 # Class

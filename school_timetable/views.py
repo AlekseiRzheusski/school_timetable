@@ -2,6 +2,8 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics
+from django_filters.rest_framework import DjangoFilterBackend
+from .filters import LessonSubjectFilter
 
 from .models import Subject, Lesson, Teacher, Class
 from .serializers import (SubjectListSerializer,
@@ -32,18 +34,22 @@ class SubjectDetailView(APIView):
 
 
 # Lesson
-class LessonListView(APIView):
+class LessonListView(generics.ListAPIView):
 
-    def get(self, request):
-        lessons = Lesson.objects.all()
-        serializer = LessonListSerializer(lessons, many=True)
-        return Response(serializer.data)
+    queryset = Lesson.objects.all()
+    serializer_class = LessonDetailSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = LessonSubjectFilter
+    # def get(self, request):
+    #     lessons = Lesson.objects.all()
+    #     serializer = LessonListSerializer(lessons, many=True)
+    #     return Response(serializer.data)
 
 
 class LessonDetailView(generics.RetrieveAPIView):
 
     queryset = Lesson.objects.all()
-    serializer_class=LessonDetailSerializer
+    serializer_class = LessonDetailSerializer
 
 
 class LessonRawView(generics.ListAPIView):
@@ -90,6 +96,7 @@ class TeacherListView(generics.ListAPIView):
 
     queryset = Teacher.objects.all()
     serializer_class = TeacherDetailSerializer
+
 
 
 # Class

@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework import generics
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import LessonSubjectFilter
+from rest_framework import permissions
 
 from .models import Subject, Lesson, Teacher, Class
 from .serializers import (SubjectListSerializer,
@@ -59,6 +60,8 @@ class LessonRawView(generics.ListAPIView):
 
 
 class LessonView(APIView):
+
+    permission_classes = [permissions.IsAuthenticated]
 
     def put(self, request):
         lesson = LessonSerializer(data=request.data)
